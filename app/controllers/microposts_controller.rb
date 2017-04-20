@@ -13,7 +13,7 @@ class MicropostsController < ApplicationController
       render 'toppages/index'
     end
   end
-
+  
   def destroy
     @micropost.destroy
     flash[:success] = 'メッセージを削除しました。'

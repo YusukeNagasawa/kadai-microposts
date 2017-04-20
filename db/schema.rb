@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419024915) do
+ActiveRecord::Schema.define(version: 20170419074407) do
+
+  create_table "favoraits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "fav_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fav_id"], name: "index_favoraits_on_fav_id", using: :btree
+    t.index ["user_id", "fav_id"], name: "index_favoraits_on_user_id_and_fav_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_favoraits_on_user_id", using: :btree
+  end
 
   create_table "microposts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
@@ -38,6 +48,8 @@ ActiveRecord::Schema.define(version: 20170419024915) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "favoraits", "microposts", column: "fav_id"
+  add_foreign_key "favoraits", "users"
   add_foreign_key "microposts", "users"
   add_foreign_key "relationships", "users"
   add_foreign_key "relationships", "users", column: "follow_id"
